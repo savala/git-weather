@@ -2,7 +2,7 @@
 A nifty weather command for git lovers
 
 ## Setup
-Add the git-weather to your path like so
+Add the git-weather script to your path like so
 
 ```sh
 export PATH=$PATH:<path to git-weather folder>
