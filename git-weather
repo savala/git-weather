@@ -1,3 +1,12 @@
 #!/usr/bin/env bash
 
-echo "Time to get the weather"
+apiKey=$(cat settings.json | python -c 'import json;import sys;obj=json.load(sys.stdin); print obj["API_KEY"]' 2>&1)
+state=$(cat settings.json | python -c 'import json;import sys;obj=json.load(sys.stdin); print obj["Location"].split(",")[1][1:]' 2>&1)
+city=$(cat settings.json | python -c 'import json;import sys;obj=json.load(sys.stdin); print obj["Location"].split(",")[0]' 2>&1)
+
+url="http://api.wunderground.com/api$apiKey/forecast/q/$state/$city.json"
+output=$(curl -s "http://api.wunderground.com/api/$apiKey/forecast/q/$state/$city.json")
+
+todayTitle=$(echo $output | python -c 'import json; import sys; obj=json.load(sys.stdin); today_title=obj["forecast"]["txt_forecast"]["forecastday"][0]["title"]; print today_title')
+todayText=$(echo $output | python -c 'import json; import sys; obj=json.load(sys.stdin); today_title=obj["forecast"]["txt_forecast"]["forecastday"][0]["fcttext"]; print today_title')
+printf "Weather for %s\nForecast: %s\n" "${todayTitle}" "${todayText}"
