@@ -26,3 +26,11 @@ Add your API key and location to settings.json
     "Location": "San Francisco, CA"
 }
 ```
+
+## How to use
+Execute the following in your terminal
+
+
+```sh
+git weather
+```
